@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CountryInfoActivity"
+            android:label="@string/title_activity_country_info"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fknussel.challengeo.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ChallengeActivity"
+            android:label="@string/title_activity_challenge"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fknussel.challengeo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

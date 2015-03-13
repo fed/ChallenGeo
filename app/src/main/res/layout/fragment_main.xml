@@ -4,9 +4,48 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".MainActivity$MainFragment"
+    android:fillViewport="true"
+    android:background="@drawable/newyork">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <AutoCompleteTextView
+        android:id="@+id/selectCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search for a country"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:id="@+id/getCountryInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/country_info"
+        android:layout_below="@id/selectCountry"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_corners_1"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/getRandomCountryInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/random_country_info"
+        android:layout_below="@id/getCountryInfo"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_corners_2"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/challengeAccepted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/challenge_accepted"
+        android:layout_below="@id/getRandomCountryInfo"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_corners_3" />
 
 </RelativeLayout>

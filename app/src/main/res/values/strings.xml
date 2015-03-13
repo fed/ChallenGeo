@@ -2,4 +2,10 @@
     <string name="app_name">ChallenGeo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="challenge_accepted">Challenge Accepted!</string>
+    <string name="random_country_info">Get Random Country Info</string>
+    <string name="country_info">Get Country Info</string>
+    <string name="title_activity_country_info">CountryInfoActivity</string>
+    <string name="title_activity_challenge">ChallengeActivity</string>
+    <string name="not_ready">This feature ain\'t ready just yet :(</string>
 </resources>
