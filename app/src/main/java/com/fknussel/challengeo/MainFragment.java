@@ -70,9 +70,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
         getCountryInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
-                intent.putExtra("code", countries.get(selection));
-                startActivity(intent);
+                if (selection != null) {
+                    Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
+                    intent.putExtra("code", countries.get(selection));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_country_selected, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
