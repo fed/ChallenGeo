@@ -13,7 +13,7 @@ public class Country {
     private HashMap<String, String> translations;
     private String alpha2Code;
     private String alpha3Code;
-    private int population;
+    private double population;
     private String demonym;
     private double area;
     private double gini;
@@ -113,11 +113,11 @@ public class Country {
         this.alpha3Code = alpha3Code;
     }
 
-    public int getPopulation() {
+    public double getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(double population) {
         this.population = population;
     }
 
