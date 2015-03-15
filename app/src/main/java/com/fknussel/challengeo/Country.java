@@ -21,12 +21,12 @@ public class Country {
     private double lng;
     private List<String> timezones;
     private List<String> borders;
-    private List<Integer> callingCodes;
+    private List<String> callingCodes;
     private List<String> tld;
     private List<String> currencies;
     private List<String> languages;
 
-    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double lat, double lng, List<String> timezones, List<String> borders, List<Integer> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
+    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double lat, double lng, List<String> timezones, List<String> borders, List<String> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -177,11 +177,11 @@ public class Country {
         this.borders = borders;
     }
 
-    public List<Integer> getCallingCodes() {
+    public List<String> getCallingCodes() {
         return callingCodes;
     }
 
-    public void setCallingCodes(List<Integer> callingCodes) {
+    public void setCallingCodes(List<String> callingCodes) {
         this.callingCodes = callingCodes;
     }
 
