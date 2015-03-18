@@ -2,31 +2,61 @@
     xmlns:tools="http://schemas.android.com/tools" 
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fknussel.challengeo.CountryInfoActivity$CountryInfoFragment"
+    tools:context=".CountryInfoActivity$CountryInfoFragment"
     android:orientation="vertical">
 
-    <TextView android:id="@+id/country_code"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" />
-
     <TextView android:id="@+id/country_name"
-        android:layout_width="wrap_content" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:text="Country name"
+        android:background="@color/primary"
+        android:padding="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_dark"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView android:id="@+id/country_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  >  " />
+
+        <TextView android:id="@+id/country_subregion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subregion" />
+        
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/country_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/alt_flag" />
+
+    <TextView android:id="@+id/country_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView android:id="@+id/country_population"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" />
-
-    <TextView android:id="@+id/country_region"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" />
-
-    <TextView android:id="@+id/country_subregion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:id="@+id/country_map"
+        android:text="@string/button_map" />
 
 </LinearLayout>
