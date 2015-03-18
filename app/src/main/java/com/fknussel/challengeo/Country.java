@@ -17,8 +17,7 @@ public class Country {
     private String demonym;
     private double area;
     private double gini;
-    private double lat;
-    private double lng;
+    private double[] latlng;
     private List<String> timezones;
     private List<String> borders;
     private List<String> callingCodes;
@@ -26,7 +25,7 @@ public class Country {
     private List<String> currencies;
     private List<String> languages;
 
-    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double lat, double lng, List<String> timezones, List<String> borders, List<String> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
+    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double[] latlng, List<String> timezones, List<String> borders, List<String> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -39,8 +38,7 @@ public class Country {
         this.demonym = demonym;
         this.area = area;
         this.gini = gini;
-        this.lat = lat;
-        this.lng = lng;
+        this.latlng = latlng;
         this.timezones = timezones;
         this.borders = borders;
         this.callingCodes = callingCodes;
@@ -145,20 +143,24 @@ public class Country {
         this.gini = gini;
     }
 
+    public double[] getCoordinates() {
+        return latlng;
+    }
+    
     public double getLat() {
-        return lat;
+        return latlng[0];
+    }
+    
+    public double getLng() {
+        return latlng[1];
     }
 
     public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
+        this.latlng[0] = lat;
     }
 
     public void setLng(double lng) {
-        this.lng = lng;
+        this.latlng[1] = lng;
     }
 
     public List<String> getTimezones() {
