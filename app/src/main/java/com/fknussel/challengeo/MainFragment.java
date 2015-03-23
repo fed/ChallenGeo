@@ -48,7 +48,7 @@ public class MainFragment extends Fragment {
         final Button getCountryInfoButton = (Button) rootView.findViewById(R.id.getCountryInfo);
         final Button getRandomCountryInfoButton = (Button) rootView.findViewById(R.id.getRandomCountryInfo);
         final Button challengeAcceptedButton = (Button) rootView.findViewById(R.id.challengeAccepted);
-
+        
         // AutoCompleteTextView will start working from first character
         actv.setThreshold(1);
 
@@ -74,6 +74,10 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (selection != null) {
+
+                    // Clear from previous searches
+                    actv.setText("");
+                    
                     Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
                     intent.putExtra("name", selection);
                     intent.putExtra("code", AppHelper.mapCodes.get(selection));
@@ -120,4 +124,6 @@ public class MainFragment extends Fragment {
 
         return rootView;
     }
+    
+    
 }
