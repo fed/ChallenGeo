@@ -88,12 +88,19 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
+                
                 int size = AppHelper.listNames.size();
                 int min = 0;
                 int max = size - 1;
                 Random rand = new Random();
                 int random = rand.nextInt((max - min) + 1) + min;
-                String randomCode = AppHelper.mapCodes.get(AppHelper.listNames.get(random));
+                
+                String randomName = AppHelper.listNames.get(random);
+                String randomCode = AppHelper.mapCodes.get(randomName);
+                
+                Log.d(TAG, "RANDOM: " + randomName + " (" + randomCode + ")");
+                
+                intent.putExtra("name", randomName);
                 intent.putExtra("code", randomCode);
                 startActivity(intent);
             }
