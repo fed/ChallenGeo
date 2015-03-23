@@ -13,18 +13,36 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
 
+import java.util.HashMap;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private static boolean RUN_ONCE = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFragment())
-                    .commit();
+        if (RUN_ONCE) {
+            RUN_ONCE = false;
+
+            // First load the splash fragment
+            // which will eventually take the user to the main fragment
+            // once it has fetched the data from the API
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new SplashFragment())
+                        .commit();
+            }
+        } else {
+            // Data already fetched, take me to the main fragment
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new MainFragment())
+                        .commit();
+            }
         }
     }
 

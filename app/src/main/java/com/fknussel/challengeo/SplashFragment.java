@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
@@ -25,42 +25,44 @@ public class SplashFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getActivity().getActionBar() != null) {
+            getActivity().getActionBar().hide();
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
 
-        final HashMap<String, String> map = new HashMap<>();
+        ApiClient.getApiInterface().getAllCountries(new Callback<List<Country>>() {
+            @Override
+            public void success(List<Country> countries, Response response) {
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new MainFragment());
-        transaction.addToBackStack(null);
-        transaction.commit();
+                for (Country country : countries) {
+                    AppHelper.listCountries.add(country);
+                    AppHelper.mapCodes.put(country.getName(), country.getAlpha2Code());
+                    AppHelper.listNames.add(country.getName());
+                    Log.d(TAG, "Loaded Country: " + country.getName());
+                }
 
-//        ApiClient.getApiInterface().getAllCountries(new Callback<List<Country>>() {
-//            @Override
-//            public void success(List<Country> countries, Response response) {
-//
-//                // TO DO: cache countries into the database
-//                for (Country country : countries) {
-//                    map.put(country.getAlpha2Code(), country.getName());
-//                }
-//
-//                // Replace whatever is in the container view with this fragment,
-//                // and add the transaction to the back stack
-//                Fragment newFragment = new MainFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.container, newFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.d(TAG, error.getMessage());
-//            }
-//        });
+                Log.d(TAG, "Done loading countries :) ----------------");
+
+                // Replace whatever is in the container view with this fragment
+                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new MainFragment());
+                transaction.commit();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, error.getMessage());
+            }
+        });
         
         return rootView;
     }
