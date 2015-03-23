@@ -94,7 +94,12 @@ public class CountryInfoFragment extends Fragment {
             String textLanguages = "";
             i = 1;
             for (String language : languages) {
-                textLanguages += language;
+                if (AppHelper.mapLanguages.get(language.toUpperCase()) != null) {
+                    textLanguages += AppHelper.mapLanguages.get(language.toUpperCase());
+                } else {
+                    textLanguages += language;
+                }
+                
                 if (i++ != languages.size()) {
                     textLanguages += ", ";
                 }

@@ -52,6 +52,8 @@ public class SplashFragment extends Fragment {
 
                 Log.d(TAG, "Done loading countries :) ----------------");
 
+                AppHelper.loadLanguages();
+
                 // Replace whatever is in the container view with this fragment
                 FragmentTransaction transaction = getFragmentManager().beginTransaction()
                         .replace(R.id.container, new MainFragment());
