@@ -102,6 +102,10 @@ public class MainFragment extends Fragment {
                 
                 intent.putExtra("name", randomName);
                 intent.putExtra("code", randomCode);
+
+                // Prevents the new Activity from being added to the history stack
+                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                
                 startActivity(intent);
             }
         });
