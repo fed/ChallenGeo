@@ -13,20 +13,19 @@ public class Country {
     private HashMap<String, String> translations;
     private String alpha2Code;
     private String alpha3Code;
-    private int population;
+    private double population;
     private String demonym;
     private double area;
     private double gini;
-    private double lat;
-    private double lng;
+    private double[] latlng;
     private List<String> timezones;
     private List<String> borders;
-    private List<Integer> callingCodes;
-    private List<String> tld;
+    private List<String> callingCodes;
+    private List<String> topLevelDomain;
     private List<String> currencies;
     private List<String> languages;
 
-    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double lat, double lng, List<String> timezones, List<String> borders, List<Integer> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
+    public Country(String name, String capital, String region, String subregion, String nativeName, HashMap<String, String> translations, String alpha2Code, String alpha3Code, int population, String demonym, double area, double gini, double[] latlng, List<String> timezones, List<String> borders, List<String> callingCodes, List<String> tld, List<String> currencies, List<String> languages) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -39,12 +38,11 @@ public class Country {
         this.demonym = demonym;
         this.area = area;
         this.gini = gini;
-        this.lat = lat;
-        this.lng = lng;
+        this.latlng = latlng;
         this.timezones = timezones;
         this.borders = borders;
         this.callingCodes = callingCodes;
-        this.tld = tld;
+        this.topLevelDomain = topLevelDomain;
         this.currencies = currencies;
         this.languages = languages;
     }
@@ -113,11 +111,11 @@ public class Country {
         this.alpha3Code = alpha3Code;
     }
 
-    public int getPopulation() {
+    public double getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(double population) {
         this.population = population;
     }
 
@@ -145,20 +143,24 @@ public class Country {
         this.gini = gini;
     }
 
+    public double[] getCoordinates() {
+        return latlng;
+    }
+    
     public double getLat() {
-        return lat;
+        return latlng[0];
+    }
+    
+    public double getLng() {
+        return latlng[1];
     }
 
     public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
+        this.latlng[0] = lat;
     }
 
     public void setLng(double lng) {
-        this.lng = lng;
+        this.latlng[1] = lng;
     }
 
     public List<String> getTimezones() {
@@ -177,20 +179,20 @@ public class Country {
         this.borders = borders;
     }
 
-    public List<Integer> getCallingCodes() {
+    public List<String> getCallingCodes() {
         return callingCodes;
     }
 
-    public void setCallingCodes(List<Integer> callingCodes) {
+    public void setCallingCodes(List<String> callingCodes) {
         this.callingCodes = callingCodes;
     }
 
-    public List<String> getTld() {
-        return tld;
+    public List<String> getTopLevelDomain() {
+        return topLevelDomain;
     }
 
-    public void setTld(List<String> tld) {
-        this.tld = tld;
+    public void setTopLevelDomain(List<String> topLevelDomain) {
+        this.topLevelDomain = topLevelDomain;
     }
 
     public List<String> getCurrencies() {

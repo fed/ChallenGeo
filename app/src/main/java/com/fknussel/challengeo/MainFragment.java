@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -41,7 +42,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
         // Creating the instance of ArrayAdapter containing list of countries
         final HashMap<String, String> countries = loadAutoCompleteOptions();
 
-        ArrayList<String> names = new ArrayList<>();
+        final ArrayList<String> names = new ArrayList<>();
         for(Map.Entry<String, String> country : countries.entrySet()) {
             names.add(country.getKey());
         }
@@ -69,9 +70,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
         getCountryInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
-                intent.putExtra("code", countries.get(selection));
-                startActivity(intent);
+                if (selection != null) {
+                    Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
+                    intent.putExtra("code", countries.get(selection));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_country_selected, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -80,6 +85,17 @@ public class MainFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
+                
+                int size = names.size();
+                int min = 0;
+                int max = size - 1;
+                Random rand = new Random();
+                int random = rand.nextInt((max - min) + 1) + min;
+
+                String randomCode = countries.get(names.get(random));
+                
+                intent.putExtra("code", randomCode);
+                
                 startActivity(intent);
             }
         });

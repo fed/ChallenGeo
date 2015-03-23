@@ -1,12 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.fknussel.challengeo.CountryInfoActivity$CountryInfoFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".CountryInfoActivity$CountryInfoFragment">
 
-    <TextView android:id="@+id/country_code" 
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/country_flag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="#CBCBCB"
+        android:contentDescription="@string/alt_flag"
+        android:src="@drawable/placeholder" />
+
+    <ListView
+        android:id="@+id/country_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/country_flag" />
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/grey"-->
+        <!--android:id="@+id/country_map"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:text="@string/button_map"-->
+        <!--android:layout_below="@id/country_info" />-->
 
 </RelativeLayout>
