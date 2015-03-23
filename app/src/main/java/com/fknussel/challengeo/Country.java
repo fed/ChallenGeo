@@ -21,7 +21,7 @@ public class Country {
     private List<String> timezones;
     private List<String> borders;
     private List<String> callingCodes;
-    private List<String> tld;
+    private List<String> topLevelDomain;
     private List<String> currencies;
     private List<String> languages;
 
@@ -42,7 +42,7 @@ public class Country {
         this.timezones = timezones;
         this.borders = borders;
         this.callingCodes = callingCodes;
-        this.tld = tld;
+        this.topLevelDomain = topLevelDomain;
         this.currencies = currencies;
         this.languages = languages;
     }
@@ -187,12 +187,12 @@ public class Country {
         this.callingCodes = callingCodes;
     }
 
-    public List<String> getTld() {
-        return tld;
+    public List<String> getTopLevelDomain() {
+        return topLevelDomain;
     }
 
-    public void setTld(List<String> tld) {
-        this.tld = tld;
+    public void setTopLevelDomain(List<String> topLevelDomain) {
+        this.topLevelDomain = topLevelDomain;
     }
 
     public List<String> getCurrencies() {
