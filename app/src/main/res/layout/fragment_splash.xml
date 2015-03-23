@@ -3,12 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashFragment"
-    android:background="@color/grey">
+    android:background="@color/primary_material_dark">
 
     <ImageView
+        android:id="@+id/splash_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/flag"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="25dp"
+        android:contentDescription="@string/app_name" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_wait"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/splash_icon"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
