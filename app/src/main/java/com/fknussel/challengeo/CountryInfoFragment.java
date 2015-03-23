@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,79 +55,113 @@ public class CountryInfoFragment extends Fragment {
         final ImageView flagView = (ImageView) rootView.findViewById(R.id.country_flag);
         final ListView infoListView = (ListView) rootView.findViewById(R.id.country_info);
         
-        final double lat = country.getLat();
-        final double lng = country.getLng();
-        
-        double population = country.getPopulation();
-        String formattedPopulation = NumberFormat.getNumberInstance(Locale.US).format(population);
+        int i;
 
         getActivity().setTitle(name);
 
-        // Concatenate Languages
-        List<String> languages = country.getLanguages();
-        String textLanguages = "";
-        int i = 1;
-        for (String language : languages) {
-            textLanguages += language;
-            if (i++ != languages.size()) {
-                textLanguages += ", ";
-            }
-        }
-
-        // Concatenate Currencies
-        List<String> currencies = country.getCurrencies();
-        String textCurrencies = "";
-        i = 1;
-        for (String currency : currencies) {
-            textCurrencies += currency;
-            if (i++ != currencies.size()) {
-                textCurrencies += ", ";
-            }
-        }
-
-        // Concatenate Timezones
-        List<String> timezones = country.getTimezones();
-        String textTimezones = "";
-        i = 1;
-        for (String timezone : timezones) {
-            textTimezones += timezone;
-            if (i++ != timezones.size()) {
-                textTimezones += ", ";
-            }
-        }
-
-        // Concatenate TLDs
-        List<String> tlds = country.getTopLevelDomain();
-        String textTlds = "";
-        i = 1;
-        for (String tld : tlds) {
-            textTlds += tld;
-            if (i++ != tlds.size()) {
-                textTlds += ", ";
-            }
-        }
-
-        // Concatenate Calling Codes
-        List<String> callingCodes = country.getCallingCodes();
-        String textCallingCodes = "";
-        i = 1;
-        for (String callingCode : callingCodes) {
-            textCallingCodes += "+" + callingCode;
-            if (i++ != callingCodes.size()) {
-                textCallingCodes += ", ";
-            }
+        // ListView data source
+        ArrayList<CountryInfoItem> countryInformation = new ArrayList<>();
+        
+        // -- Native name
+        String nativeName = country.getNativeName();
+        if (nativeName != null && !TextUtils.isEmpty(nativeName)) {
+            countryInformation.add(new CountryInfoItem("Native Name", country.getNativeName()));
         }
         
-        // Construct the data source
-        ArrayList<CountryInfoItem> countryInformation = new ArrayList<>();
-        countryInformation.add(new CountryInfoItem("Region", country.getRegion() + " > " + country.getSubregion()));
-        countryInformation.add(new CountryInfoItem("Population", formattedPopulation));
-        countryInformation.add(new CountryInfoItem("Official Languages", textLanguages));
-        countryInformation.add(new CountryInfoItem("Capital City", country.getCapital()));
-        countryInformation.add(new CountryInfoItem("Currencies", textCurrencies));
-        countryInformation.add(new CountryInfoItem("Timezones", textTimezones));
-        countryInformation.add(new CountryInfoItem("Calling Codes", textCallingCodes));
-        countryInformation.add(new CountryInfoItem("Top Level Domains", textTlds));
+        // -- Region and Subregion
+        String region = country.getRegion();
+        String subregion = country.getSubregion();
+        if (region != null && subregion != null && !TextUtils.isEmpty(region) && !TextUtils.isEmpty(subregion)) {
+            countryInformation.add(new CountryInfoItem("Region", country.getRegion() + " > " + country.getSubregion()));
+        }
+
+        // -- Capital City
+        String capital = country.getCapital();
+        if (capital != null && !TextUtils.isEmpty(capital)) {
+            countryInformation.add(new CountryInfoItem("Capital City", country.getCapital()));
+        }
+        
+        // -- Population
+        double population = country.getPopulation();
+        if (population != 0) {
+            String formattedPopulation = NumberFormat.getNumberInstance(Locale.US).format(country.getPopulation());
+            countryInformation.add(new CountryInfoItem("Population", formattedPopulation));
+        }
+        
+        // -- Official Languages
+        List<String> languages = country.getLanguages();
+        if (languages != null && languages.size() > 0 && !languages.get(0).equals("")) {
+            String textLanguages = "";
+            i = 1;
+            for (String language : languages) {
+                textLanguages += language;
+                if (i++ != languages.size()) {
+                    textLanguages += ", ";
+                }
+            }
+            
+            countryInformation.add(new CountryInfoItem("Official Languages", textLanguages));
+        }
+        
+        // -- Currencies
+        List<String> currencies = country.getCurrencies();
+        if (currencies != null && currencies.size() > 0 && !currencies.get(0).equals("")) {
+            String textCurrencies = "";
+            i = 1;
+            for (String currency : currencies) {
+                textCurrencies += currency;
+                if (i++ != currencies.size()) {
+                    textCurrencies += ", ";
+                }
+            }
+            
+            countryInformation.add(new CountryInfoItem("Currencies", textCurrencies));    
+        }
+        
+        // -- Timezones
+        List<String> timezones = country.getTimezones();
+        if (timezones != null && timezones.size() > 0 && !timezones.get(0).equals("")) {
+            String textTimezones = "";
+            i = 1;
+            for (String timezone : timezones) {
+                textTimezones += timezone;
+                if (i++ != timezones.size()) {
+                    textTimezones += ", ";
+                }
+            }
+            
+            countryInformation.add(new CountryInfoItem("Timezones", textTimezones));
+        }
+       
+        // -- Calling Codes
+        List<String> callingCodes = country.getCallingCodes();
+        if (callingCodes != null && callingCodes.size() > 0 && !callingCodes.get(0).equals("")) {
+            String textCallingCodes = "";
+            i = 1;
+            for (String callingCode : callingCodes) {
+                textCallingCodes += "+" + callingCode;
+                if (i++ != callingCodes.size()) {
+                    textCallingCodes += ", ";
+                }
+            }
+            
+            countryInformation.add(new CountryInfoItem("Calling Codes", textCallingCodes));
+        }
+        
+        // -- Top Level Domains
+        List<String> tlds = country.getTopLevelDomain();
+        if (tlds != null && tlds.size() > 0 && !tlds.get(0).equals("")) {
+            String textTlds = "";
+            i = 1;
+            for (String tld : tlds) {
+                textTlds += tld;
+                if (i++ != tlds.size()) {
+                    textTlds += ", ";
+                }
+            }
+            
+            countryInformation.add(new CountryInfoItem("Top Level Domains", textTlds));
+        }
 
         // Create the adapter to convert the array to views
         CountryInfoAdapter customAdapter = new CountryInfoAdapter(getActivity(), countryInformation);
@@ -134,7 +169,12 @@ public class CountryInfoFragment extends Fragment {
         // Attach the adapter to a ListView
         infoListView.setAdapter(customAdapter);
 
-                /*mapView.setOnClickListener(new View.OnClickListener() {
+                /*
+                
+                final double lat = country.getLat();
+                final double lng = country.getLng();
+        
+                mapView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
