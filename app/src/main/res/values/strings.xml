@@ -16,4 +16,8 @@
     <string name="alt_flag">Flag</string>
     <string name="button_map">View in map</string>
     <string name="please_wait">Fetching data from the Internet...</string>
+    <string name="wrong_answer">Wrong Answer</string>
+    <string name="next_question">Next Question</string>
+    <string name="right_answer">Right Answer</string>
+    <string name="try_again">Try Again</string>
 </resources>
