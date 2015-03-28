@@ -1,21 +1,18 @@
 package com.fknussel.challengeo;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,18 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 public class CountryInfoFragment extends Fragment {
-
-    private static final String FLAG_BASE_URL = "http://www.geonames.org/flags/x/";
-    private static final String FLAG_DEFAULT_EXTENSION = ".gif";
     
     private static String TAG = CountryInfoFragment.class.getSimpleName();
+
+    CountryInfoAdapter customAdapter;
+    private ImageView flagView;
     
     public CountryInfoFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -50,129 +49,22 @@ public class CountryInfoFragment extends Fragment {
         // Get Country
         int index = AppHelper.listNames.indexOf(name);
         Country country = AppHelper.listCountries.get(index);
-        
+
         // Get views
-        final ImageView flagView = (ImageView) rootView.findViewById(R.id.country_flag);
+        flagView = (ImageView) rootView.findViewById(R.id.country_flag);
         final ListView infoListView = (ListView) rootView.findViewById(R.id.country_info);
-        
-        int i;
 
-        getActivity().setTitle(name);
+        // Set country name as title in action bar
+        getActivity().setTitle(country.getName());
 
-        // ListView data source
-        ArrayList<CountryInfoItem> countryInformation = new ArrayList<>();
-        
-        // -- Native name
-        String nativeName = country.getNativeName();
-        if (nativeName != null && !TextUtils.isEmpty(nativeName)) {
-            countryInformation.add(new CountryInfoItem("Native Name", country.getNativeName()));
-        }
-        
-        // -- Region and Subregion
-        String region = country.getRegion();
-        String subregion = country.getSubregion();
-        if (region != null && subregion != null && !TextUtils.isEmpty(region) && !TextUtils.isEmpty(subregion)) {
-            countryInformation.add(new CountryInfoItem("Region", country.getRegion() + " > " + country.getSubregion()));
-        }
-
-        // -- Capital City
-        String capital = country.getCapital();
-        if (capital != null && !TextUtils.isEmpty(capital)) {
-            countryInformation.add(new CountryInfoItem("Capital City", country.getCapital()));
-        }
-        
-        // -- Population
-        double population = country.getPopulation();
-        if (population != 0) {
-            String formattedPopulation = NumberFormat.getNumberInstance(Locale.US).format(country.getPopulation());
-            countryInformation.add(new CountryInfoItem("Population", formattedPopulation));
-        }
-        
-        // -- Official Languages
-        List<String> languages = country.getLanguages();
-        if (languages != null && languages.size() > 0 && !languages.get(0).equals("")) {
-            String textLanguages = "";
-            i = 1;
-            for (String language : languages) {
-                if (AppHelper.mapLanguages.get(language.toUpperCase()) != null) {
-                    textLanguages += AppHelper.mapLanguages.get(language.toUpperCase());
-                } else {
-                    textLanguages += language;
-                }
-                
-                if (i++ != languages.size()) {
-                    textLanguages += ", ";
-                }
-            }
-            
-            countryInformation.add(new CountryInfoItem("Official Languages", textLanguages));
-        }
-        
-        // -- Currencies
-        List<String> currencies = country.getCurrencies();
-        if (currencies != null && currencies.size() > 0 && !currencies.get(0).equals("")) {
-            String textCurrencies = "";
-            i = 1;
-            for (String currency : currencies) {
-                textCurrencies += currency;
-                if (i++ != currencies.size()) {
-                    textCurrencies += ", ";
-                }
-            }
-            
-            countryInformation.add(new CountryInfoItem("Currencies", textCurrencies));    
-        }
-        
-        // -- Timezones
-        List<String> timezones = country.getTimezones();
-        if (timezones != null && timezones.size() > 0 && !timezones.get(0).equals("")) {
-            String textTimezones = "";
-            i = 1;
-            for (String timezone : timezones) {
-                textTimezones += timezone;
-                if (i++ != timezones.size()) {
-                    textTimezones += ", ";
-                }
-            }
-            
-            countryInformation.add(new CountryInfoItem("Timezones", textTimezones));
-        }
-       
-        // -- Calling Codes
-        List<String> callingCodes = country.getCallingCodes();
-        if (callingCodes != null && callingCodes.size() > 0 && !callingCodes.get(0).equals("")) {
-            String textCallingCodes = "";
-            i = 1;
-            for (String callingCode : callingCodes) {
-                textCallingCodes += "+" + callingCode;
-                if (i++ != callingCodes.size()) {
-                    textCallingCodes += ", ";
-                }
-            }
-            
-            countryInformation.add(new CountryInfoItem("Calling Codes", textCallingCodes));
-        }
-        
-        // -- Top Level Domains
-        List<String> tlds = country.getTopLevelDomain();
-        if (tlds != null && tlds.size() > 0 && !tlds.get(0).equals("")) {
-            String textTlds = "";
-            i = 1;
-            for (String tld : tlds) {
-                textTlds += tld;
-                if (i++ != tlds.size()) {
-                    textTlds += ", ";
-                }
-            }
-            
-            countryInformation.add(new CountryInfoItem("Top Level Domains", textTlds));
-        }
-
-        // Create the adapter to convert the array to views
-        CountryInfoAdapter customAdapter = new CountryInfoAdapter(getActivity(), countryInformation);
+        // Create the adapter to convert the array into views
+        customAdapter = new CountryInfoAdapter(getActivity());
+        customAdapter.setCountry(country);
 
         // Attach the adapter to a ListView
         infoListView.setAdapter(customAdapter);
+
+        updateFlag(country.getAlpha2Code());
 
                 /*
                 
@@ -220,14 +112,55 @@ public class CountryInfoFragment extends Fragment {
                 });
 */
 
-        String flagFilename = FLAG_BASE_URL + code.toLowerCase() + FLAG_DEFAULT_EXTENSION;
-        
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_country_info, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_random) {
+
+            // Get Country
+            String name = AppHelper.getRandomCountryName();
+            int index = AppHelper.listNames.indexOf(name);
+            Country country = AppHelper.listCountries.get(index);
+
+            getActivity().setTitle(country.getName());
+
+            customAdapter.setCountry(country);
+            customAdapter.notifyDataSetChanged();
+
+            updateFlag(country.getAlpha2Code());
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void updateFlag(String code) {
+        String flagFilename = AppHelper.FLAG_BASE_URL + code.toLowerCase() + AppHelper.FLAG_DEFAULT_EXTENSION;
+
         Picasso.with(getActivity())
                 .load(flagFilename)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.broken_link)
                 .into(flagView);
-
-        return rootView;
     }
+
 }

@@ -1,14 +1,12 @@
 package com.fknussel.challengeo;
 
-import android.support.v4.app.FragmentTransaction;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import java.util.List;
 
@@ -19,6 +17,8 @@ import retrofit.client.Response;
 public class SplashFragment extends Fragment {
     
     private static final String TAG = SplashFragment.class.getSimpleName();
+    
+    private OnDataLoadedListener callback;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -55,9 +55,7 @@ public class SplashFragment extends Fragment {
                 AppHelper.loadLanguages();
 
                 // Replace whatever is in the container view with this fragment
-                FragmentTransaction transaction = getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new MainFragment());
-                transaction.commit();
+                callback.onDataLoaded();
             }
 
             @Override
@@ -67,5 +65,21 @@ public class SplashFragment extends Fragment {
         });
         
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        
+        try {
+            callback = (OnDataLoadedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnDataLoadedListener");
+        }
+    }
+
+    public interface OnDataLoadedListener {
+
+        public void onDataLoaded();
     }
 }

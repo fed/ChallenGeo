@@ -1,7 +1,6 @@
 package com.fknussel.challengeo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,19 +14,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 public class MainFragment extends Fragment {
     
     private String selection;
+    
+    private OnCountrySelectedListener countrySelectedListener;
+    private OnRandomCountryRequestedListener randomCountryRequestedListener;
+    private OnChallengeAcceptedListener challengeAcceptedListener;
     
     private static String TAG = MainFragment.class.getSimpleName();
 
@@ -65,7 +58,9 @@ public class MainFragment extends Fragment {
 
                 // Dismiss soft keyboard
                 InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                if (getActivity().getCurrentFocus() != null) {
+                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                }
             }
         });
         
@@ -78,10 +73,7 @@ public class MainFragment extends Fragment {
                     // Clear from previous searches
                     actv.setText("");
                     
-                    Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
-                    intent.putExtra("name", selection);
-                    intent.putExtra("code", AppHelper.mapCodes.get(selection));
-                    startActivity(intent);
+                    countrySelectedListener.onCountrySelected(selection);
                 } else {
                     Toast.makeText(getActivity(), R.string.no_country_selected, Toast.LENGTH_SHORT).show();
                 }
@@ -91,39 +83,52 @@ public class MainFragment extends Fragment {
         getRandomCountryInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CountryInfoActivity.class);
-                
-                int size = AppHelper.listNames.size();
-                int min = 0;
-                int max = size - 1;
-                Random rand = new Random();
-                int random = rand.nextInt((max - min) + 1) + min;
-                
-                String randomName = AppHelper.listNames.get(random);
-                String randomCode = AppHelper.mapCodes.get(randomName);
-                
-                Log.d(TAG, "RANDOM: " + randomName + " (" + randomCode + ")");
-                
-                intent.putExtra("name", randomName);
-                intent.putExtra("code", randomCode);
-
-                // Prevents the new Activity from being added to the history stack
-                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                
-                startActivity(intent);
+                randomCountryRequestedListener.onRandomCountryRequested();
             }
         });
 
         challengeAcceptedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChallengeActivity.class);
-                startActivity(intent);
+                challengeAcceptedListener.onChallengeAccepted();
             }
         });
 
         return rootView;
     }
-    
-    
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        
+        try {
+            countrySelectedListener = (OnCountrySelectedListener) activity;
+        } catch(ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnCountrySelectedListener interface");
+        }
+
+        try {
+            randomCountryRequestedListener = (OnRandomCountryRequestedListener) activity;
+        } catch(ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnRandomCountryRequestedListener interface");
+        }
+
+        try {
+            challengeAcceptedListener = (OnChallengeAcceptedListener) activity;
+        } catch(ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement ChallengeAcceptedListener interface");
+        }
+    }
+
+    public interface OnCountrySelectedListener {
+        public void onCountrySelected(String name);
+    }
+
+    public interface OnRandomCountryRequestedListener {
+        public void onRandomCountryRequested();
+    }
+
+    public interface OnChallengeAcceptedListener {
+        public void onChallengeAccepted();
+    }
 }
