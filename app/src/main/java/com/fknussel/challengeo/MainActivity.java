@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onCountrySelected(String name) {
-        Intent intent = new Intent(this, CountryInfoActivity.class);
+        Intent intent = new Intent(this, CountryActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("code", AppHelper.mapCodes.get(name));
         startActivity(intent);
@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onRandomCountryRequested() {
-        Intent intent = new Intent(this, CountryInfoActivity.class);
+        Intent intent = new Intent(this, CountryActivity.class);
 
         String randomName = AppHelper.getRandomCountryName();
         String randomCode = AppHelper.mapCodes.get(randomName);

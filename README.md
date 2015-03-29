@@ -15,10 +15,6 @@ This is a simple, minimalistic geography related app. ChallenGeo has two core co
 	</tr>
 </table>
 
-## Data Source
-
-This app doesn't have its own backend since it makes use of the [restcountries.eu RESTful API](http://restcountries.eu) for country information, as well as [GeoNames' bank of flags](http://www.geonames.org) instead. Please reach out to either website to get more info on endpoints and data provided.
-
 ## Topics Covered
 
 * ListViews and custom adapters
@@ -32,3 +28,11 @@ This app doesn't have its own backend since it makes use of the [restcountries.e
 * UI Design Patterns: Navigation Drawer, Action Bar, View Pager
 * Material Design: animations and transitions
 * Robotium and Robolectric
+
+## Data Source
+
+This app doesn't have its own backend since it makes use of the [restcountries.eu RESTful API](http://restcountries.eu) for country information, as well as [GeoNames' bank of flags](http://www.geonames.org) instead. Please reach out to either website to get more info on the endpoints and data provided.
+
+## Contributing
+
+If you wish to contribute to this app, please fork it on GitHub, push your change to a named branch, then send a pull request. If it is a big feature, you might want to start an Issue first to make sure it's something that will be accepted. If it involves new code, please also write tests for it.

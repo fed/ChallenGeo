@@ -4,22 +4,10 @@
     android:layout_height="wrap_content"
     tools:context=".CountryInfoActivity$CountryInfoFragment">
 
-    <ImageView
-        android:id="@+id/country_flag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:background="#CBCBCB"
-        android:contentDescription="@string/alt_flag"
-        android:src="@drawable/placeholder" />
-
     <ListView
         android:id="@+id/country_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/country_flag" />
+        android:layout_height="wrap_content" />
 
     <!--<Button-->
         <!--android:layout_width="match_parent"-->

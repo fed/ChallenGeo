@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CountryInfoActivity"
+            android:name=".CountryActivity"
             android:label="@string/title_activity_country_info"
             android:parentActivityName=".MainActivity" >
             <meta-data
