@@ -1,32 +1,28 @@
 package com.fknussel.challengeo;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.Button;
-
-import java.util.HashMap;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity 
+        implements SplashFragment.OnDataLoadedListener, MainFragment.OnCountrySelectedListener, MainFragment.OnRandomCountryRequestedListener, MainFragment.OnChallengeAcceptedListener {
 
-    private static boolean RUN_ONCE = true;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    
+    private static boolean runOnce = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        if (RUN_ONCE) {
-            RUN_ONCE = false;
+        if (runOnce) {
+            runOnce = false;
 
             // First load the splash fragment
             // which will eventually take the user to the main fragment
@@ -67,5 +63,44 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDataLoaded() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new MainFragment());
+        transaction.commit();
+    }
+
+    @Override
+    public void onCountrySelected(String name) {
+        Intent intent = new Intent(this, CountryActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("code", AppHelper.mapCodes.get(name));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRandomCountryRequested() {
+        Intent intent = new Intent(this, CountryActivity.class);
+
+        String randomName = AppHelper.getRandomCountryName();
+        String randomCode = AppHelper.mapCodes.get(randomName);
+
+        Log.d(TAG, "RANDOM: " + randomName + " (" + randomCode + ")");
+
+        intent.putExtra("name", randomName);
+        intent.putExtra("code", randomCode);
+
+        // Prevents the new Activity from being added to the history stack
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChallengeAccepted() {
+        Intent intent = new Intent(this, ChallengeActivity.class);
+        startActivity(intent);
     }
 }

@@ -2,6 +2,7 @@ package com.fknussel.challengeo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class AppHelper {
     
@@ -15,10 +16,18 @@ public class AppHelper {
     // This list just holds the names for all of the countries (used in AutoCompleteTextView)
     // Used as a workaround till building a HashMapAdapter!!!
     public static final ArrayList<String> listNames = new ArrayList<>();
+
+    // Flags Source
+    public static final String FLAG_BASE_URL = "http://www.geonames.org/flags/x/";
+    public static final String FLAG_DEFAULT_EXTENSION = ".gif";
     
+    // Challenge Statistics
+    public static int streak = 0;
+    public static int livesLeft = 3;
+
     // Languages
     public static final HashMap<String, String> mapLanguages = new HashMap<>();
-
+    
     public static void loadLanguages() {
         mapLanguages.put("AB", "Abkhazian");
         mapLanguages.put("AA", "Afar");
@@ -159,4 +168,13 @@ public class AppHelper {
         mapLanguages.put("ZU", "Zulu");
     }
 
+    // Random country generator
+    public static String getRandomCountryName() {
+        int size = AppHelper.listNames.size();
+        int min = 0;
+        int max = size - 1;
+        Random rand = new Random();
+        int random = rand.nextInt((max - min) + 1) + min;
+        return AppHelper.listNames.get(random);
+    }
 }
