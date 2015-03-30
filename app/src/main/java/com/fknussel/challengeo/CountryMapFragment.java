@@ -7,18 +7,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class CountryMapFragment extends Fragment implements Updatable {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-    private TextView mapView;
-
-    public CountryMapFragment() {
-    }
+public class CountryMapFragment extends SupportMapFragment implements Updatable {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_country_map, container, false);
 
-        this.mapView = (TextView) view.findViewById(R.id.country_map);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        try { // Make sure we can interact with the Google Map
+
+            /*
+             * MAP_TYPE_NORMAL: Basic map with roads
+             * MAP_TYPE_SATELLITE: Satellite view with roads
+             * MAP_TYPE_TERRAIN: Terrain view without roads
+             */
+            getMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+            // Show Zoom buttons
+            getMap().getUiSettings().setZoomControlsEnabled(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         updateDisplay();
 
@@ -27,9 +45,17 @@ public class CountryMapFragment extends Fragment implements Updatable {
 
     public void updateDisplay() {
 
-        CountryActivity activity = (CountryActivity) getActivity();
-        Country country = activity.getCountry();
+        Country country = ((CountryActivity) getActivity()).getCountry();
+        LatLng coords = new LatLng(country.getLat(), country.getLng());
 
-        this.mapView.setText(country.getName());
+        // Delete old markers
+        getMap().clear();
+        
+        // Create a marker in the map at a given position with a title
+        getMap().addMarker(new MarkerOptions().
+                position(coords).title(country.getName()));
+
+        // Center map on country and Restore original zoom level
+        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(coords, getMap().getMinZoomLevel()));
     }
 }
