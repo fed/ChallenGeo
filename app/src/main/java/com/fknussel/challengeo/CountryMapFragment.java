@@ -44,8 +44,7 @@ public class CountryMapFragment extends SupportMapFragment implements Updatable 
     }
 
     public void updateDisplay() {
-
-        Country country = ((CountryActivity) getActivity()).getCountry();
+        Country country = ((CountryActivity)getActivity()).getCountry();
         LatLng coords = new LatLng(country.getLat(), country.getLng());
 
         // Delete old markers

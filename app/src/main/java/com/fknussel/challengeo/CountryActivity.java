@@ -14,12 +14,20 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class CountryActivity extends ActionBarActivity {
 
+    private static final String COUNTRY_NAME = "countryName";
     private Country country;
     private int selectedTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            String savedCountryName = savedInstanceState.getString(COUNTRY_NAME);
+            int index = AppHelper.listNames.indexOf(savedCountryName);
+            this.country = AppHelper.listCountries.get(index);
+            setTitle(this.country.getName());
+        }
 
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
@@ -129,5 +137,11 @@ public class CountryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(COUNTRY_NAME, this.country.getName());
     }
 }

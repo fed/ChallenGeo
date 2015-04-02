@@ -3,10 +3,12 @@ package com.fknussel.challengeo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class CountryInfoFragment extends Fragment implements Updatable {
     
@@ -21,23 +23,27 @@ public class CountryInfoFragment extends Fragment implements Updatable {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getActivity().getIntent();
-        final String name = intent.getStringExtra("name");
-        final String code = intent.getStringExtra("code");
+        Country country = ((CountryActivity)getActivity()).getCountry();
 
-        // Get the selected / random country
-        int index = AppHelper.listNames.indexOf(name);
-        Country country = AppHelper.listCountries.get(index);
+        if (country == null) {
+            Intent intent = getActivity().getIntent();
+            final String name = intent.getStringExtra("name");
+            final String code = intent.getStringExtra("code");
 
-        // Register the current country within the hosting activity
-        ((CountryActivity)getActivity()).setCountry(country);
+            // Get the selected / random country
+            int index = AppHelper.listNames.indexOf(name);
+            country = AppHelper.listCountries.get(index);
 
-        // Set country name as title in action bar
-        getActivity().setTitle(name);
+            // Register the current country within the hosting activity
+            ((CountryActivity)getActivity()).setCountry(country);
+        }
 
         // Create the adapter to convert the array into views
         this.customAdapter = new CountryInfoAdapter(getActivity());
         this.customAdapter.setCountry(country);
+
+        // Set country name as title in action bar
+        getActivity().setTitle(country.getName());
     }
 
     @Override
@@ -50,6 +56,8 @@ public class CountryInfoFragment extends Fragment implements Updatable {
 
         // Attach the adapter to a ListView
         infoListView.setAdapter(customAdapter);
+
+        updateDisplay();
 
         return rootView;
     }

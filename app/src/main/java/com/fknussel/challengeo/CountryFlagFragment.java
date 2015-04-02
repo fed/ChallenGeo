@@ -45,8 +45,7 @@ public class CountryFlagFragment extends Fragment implements Updatable {
     }
 
     public void updateDisplay() {
-        CountryActivity activity = (CountryActivity) getActivity();
-        Country country = activity.getCountry();
+        Country country = ((CountryActivity)getActivity()).getCountry();
         updateFlag(country.getAlpha2Code());
         updateName(country.getName());
     }
