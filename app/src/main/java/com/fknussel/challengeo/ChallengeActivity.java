@@ -19,7 +19,7 @@ public class ChallengeActivity extends ActionBarActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         
         setContentView(R.layout.activity_challenge);
-        
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new ChallengeFragment())

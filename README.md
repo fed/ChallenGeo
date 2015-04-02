@@ -17,17 +17,17 @@ This is a simple, minimalistic geography related app. ChallenGeo has two core co
 
 ## Topics Covered
 
-* ListViews and custom adapters
-* Shared Preferences
-* Services
-* Handling configuration changes using headless fragments
-* Networking: consuming RESTful services using Retrofit
-* Handling network responses using GSON to parse JSON objects into POJOs
-* Handling collections using Guava
-* Flexible UI: single and multi pane layouts
-* UI Design Patterns: Navigation Drawer, Action Bar, View Pager
-* Material Design: animations and transitions
-* Robotium and Robolectric
+Services.
+ListViews and Custom Adapters.
+Using Shared Preferences to store user settings.
+Flexible UI: Landscape and portrait custom layouts.
+Handling configuration changes using headless fragments.
+Networking: Consuming RESTful services using Retrofit.
+Handling network responses using GSON to parse JSON objects into POJOs.
+Handling collections using Guava.
+UI Design Patterns: Navigation Drawer, Action Bar, View Pager, Swipe to Refresh.
+Material Design: Animations and Transitions.
+Robotium and Robolectric.
 
 ## Data Source
 
