@@ -36,6 +36,9 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // Hide action bar
+        ((MainActivity)getActivity()).getSupportActionBar().hide();
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
 
