@@ -1,7 +1,9 @@
 package com.fknussel.challengeo;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,10 @@ public class ChallengeActivity extends ActionBarActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         
         setContentView(R.layout.activity_challenge);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.challenge_accepted);
+        actionBar.setSubtitle("What's this flag?");
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

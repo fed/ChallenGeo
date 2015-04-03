@@ -2,6 +2,7 @@ package com.fknussel.challengeo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import java.util.Random;
 public class ChallengeFragment extends Fragment {
 
     private static String TAG = ChallengeFragment.class.getSimpleName();
+
+    private ArrayList<Answer> options = new ArrayList<>();
 
     public ChallengeFragment() {
     }
@@ -44,9 +47,10 @@ public class ChallengeFragment extends Fragment {
         boolean CORRECT_ANSWER_ALREADY_SET = false;
         int correctOptionIndex = 0;
 
-        final ArrayList<Answer> options = new ArrayList<>();
+        getActivity().setTitle(R.string.challenge_accepted);
+        ((ChallengeActivity)getActivity()).getSupportActionBar().setSubtitle("What's this flag?");
 
-        // Make sure u can't get the same country twice
+        // TO DO: Make sure u can't get the same country twice
         for (int i=0; i < numOptions; i++) {
 
             rand = new Random();
@@ -71,7 +75,7 @@ public class ChallengeFragment extends Fragment {
                 }
             }
 
-            options.add(new Answer(randomName, randomCode, truthValue));
+            this.options.add(new Answer(randomName, randomCode, truthValue));
         }
 
         // Display flag on screen
@@ -82,55 +86,48 @@ public class ChallengeFragment extends Fragment {
                 .error(R.drawable.broken_link)
                 .into(flagView);
 
-        option1.setText(options.get(0).getCountryName());
-        option2.setText(options.get(1).getCountryName());
-        option3.setText(options.get(2).getCountryName());
-        option4.setText(options.get(3).getCountryName());
+        // Add labels to radio buttons
+        option1.setText(this.options.get(0).getCountryName());
+        option2.setText(this.options.get(1).getCountryName());
+        option3.setText(this.options.get(2).getCountryName());
+        option4.setText(this.options.get(3).getCountryName());
 
+        // Attach listeners to all radio buttons
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (options.get(0).isCorrectAnswer()) {
-                    Toast.makeText(getActivity(), "GOOD JOB :)", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "TRY AGAIN :(", Toast.LENGTH_SHORT).show();
-                }
+                displayResult(0);
             }
         });
 
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (options.get(1).isCorrectAnswer()) {
-                    Toast.makeText(getActivity(), "GOOD JOB :)", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "TRY AGAIN :(", Toast.LENGTH_SHORT).show();
-                }
+                displayResult(1);
             }
         });
 
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (options.get(2).isCorrectAnswer()) {
-                    Toast.makeText(getActivity(), "GOOD JOB :)", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "TRY AGAIN :(", Toast.LENGTH_SHORT).show();
-                }
+                displayResult(2);
             }
         });
 
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (options.get(3).isCorrectAnswer()) {
-                    Toast.makeText(getActivity(), "GOOD JOB :)", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "TRY AGAIN :(", Toast.LENGTH_SHORT).show();
-                }
+                displayResult(3);
             }
         });
         
         return rootView;
+    }
+
+    private void displayResult(int index) {
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.container, AnswerFragment.newInstance(this.options.get(index).isCorrectAnswer()))
+                .commit();
     }
 }
