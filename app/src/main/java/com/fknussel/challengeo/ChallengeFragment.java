@@ -3,6 +3,7 @@ package com.fknussel.challengeo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,48 +30,9 @@ public class ChallengeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Generate random country here
-        // Otherwise the "try again" options fails to load
-        // the same flag twice
-        int numOptions = 4;
-        int size = AppHelper.listNames.size();
-        int min = 0;
-        int max = size - 1;
-        int random;
-        Random rand;
-        String randomName;
-        String randomCode;
-        boolean truthValue;
-        boolean CORRECT_ANSWER_ALREADY_SET = false;
-
-        // TO DO: Make sure u can't get the same country twice
-        for (int i=0; i < numOptions; i++) {
-
-            rand = new Random();
-            random = rand.nextInt((max - min) + 1) + min;
-            randomName = AppHelper.listNames.get(random);
-            randomCode = AppHelper.mapCodes.get(randomName);
-
-            if (CORRECT_ANSWER_ALREADY_SET) {
-                truthValue = false;
-            } else {
-                // Force true answer on last iteration
-                if (i == (numOptions - 1)) {
-                    truthValue = true;
-                    CORRECT_ANSWER_ALREADY_SET = true;
-                    this.correctOptionIndex = i;
-                } else {
-                    truthValue = rand.nextBoolean();
-                    if (truthValue) {
-                        CORRECT_ANSWER_ALREADY_SET = true;
-                        this.correctOptionIndex = i;
-                    }
-                }
-            }
-
-            this.options.add(new Answer(randomName, randomCode, truthValue));
-        }
-
+        // Generate random country here, otherwise the "try again"
+        // button fails to load the same flag twice
+        generateOptions();
     }
 
     @Override
@@ -79,8 +41,7 @@ public class ChallengeFragment extends Fragment {
         // Action bar might be hidden
         ((ChallengeActivity)getActivity()).getSupportActionBar().show();
 
-        // Clear backstack
-        getFragmentManager().popBackStack("challenge", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // TO DO: Clear backstack!!!
 
         // Inflate view
         View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
@@ -147,5 +108,46 @@ public class ChallengeFragment extends Fragment {
                 .replace(R.id.container, AnswerFragment.newInstance(this.options.get(index).isCorrectAnswer()))
                 .addToBackStack("challenge")
                 .commit();
+    }
+
+    private void generateOptions() {
+        int numOptions = 4;
+        int size = AppHelper.listNames.size();
+        int min = 0;
+        int max = size - 1;
+        int random;
+        Random rand;
+        String randomName;
+        String randomCode;
+        boolean truthValue;
+        boolean CORRECT_ANSWER_ALREADY_SET = false;
+
+        // TO DO: Make sure u can't get the same country twice
+        for (int i=0; i < numOptions; i++) {
+
+            rand = new Random();
+            random = rand.nextInt((max - min) + 1) + min;
+            randomName = AppHelper.listNames.get(random);
+            randomCode = AppHelper.mapCodes.get(randomName);
+
+            if (CORRECT_ANSWER_ALREADY_SET) {
+                truthValue = false;
+            } else {
+                // Force true answer on last iteration
+                if (i == (numOptions - 1)) {
+                    truthValue = true;
+                    CORRECT_ANSWER_ALREADY_SET = true;
+                    this.correctOptionIndex = i;
+                } else {
+                    truthValue = rand.nextBoolean();
+                    if (truthValue) {
+                        CORRECT_ANSWER_ALREADY_SET = true;
+                        this.correctOptionIndex = i;
+                    }
+                }
+            }
+
+            this.options.add(new Answer(randomName, randomCode, truthValue));
+        }
     }
 }
