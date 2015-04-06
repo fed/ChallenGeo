@@ -20,21 +20,18 @@ public class ChallengeFragment extends Fragment {
     private static String TAG = ChallengeFragment.class.getSimpleName();
 
     private ArrayList<Answer> options = new ArrayList<>();
+    private int correctOptionIndex;
 
     public ChallengeFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
-
-        ImageView flagView = (ImageView) rootView.findViewById(R.id.challenge_flag);
-        RadioButton option1 = (RadioButton) rootView.findViewById(R.id.challenge_option1);
-        RadioButton option2 = (RadioButton) rootView.findViewById(R.id.challenge_option2);
-        RadioButton option3 = (RadioButton) rootView.findViewById(R.id.challenge_option3);
-        RadioButton option4 = (RadioButton) rootView.findViewById(R.id.challenge_option4);
-
+        // Generate random country here
+        // Otherwise the "try again" options fails to load
+        // the same flag twice
         int numOptions = 4;
         int size = AppHelper.listNames.size();
         int min = 0;
@@ -45,10 +42,6 @@ public class ChallengeFragment extends Fragment {
         String randomCode;
         boolean truthValue;
         boolean CORRECT_ANSWER_ALREADY_SET = false;
-        int correctOptionIndex = 0;
-
-        getActivity().setTitle(R.string.challenge_accepted);
-        ((ChallengeActivity)getActivity()).getSupportActionBar().setSubtitle("What's this flag?");
 
         // TO DO: Make sure u can't get the same country twice
         for (int i=0; i < numOptions; i++) {
@@ -65,12 +58,12 @@ public class ChallengeFragment extends Fragment {
                 if (i == (numOptions - 1)) {
                     truthValue = true;
                     CORRECT_ANSWER_ALREADY_SET = true;
-                    correctOptionIndex = i;
+                    this.correctOptionIndex = i;
                 } else {
                     truthValue = rand.nextBoolean();
                     if (truthValue) {
                         CORRECT_ANSWER_ALREADY_SET = true;
-                        correctOptionIndex = i;
+                        this.correctOptionIndex = i;
                     }
                 }
             }
@@ -78,8 +71,32 @@ public class ChallengeFragment extends Fragment {
             this.options.add(new Answer(randomName, randomCode, truthValue));
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Action bar might be hidden
+        ((ChallengeActivity)getActivity()).getSupportActionBar().show();
+
+        // Clear backstack
+        getFragmentManager().popBackStack("challenge", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        // Inflate view
+        View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
+
+        ImageView flagView = (ImageView) rootView.findViewById(R.id.challenge_flag);
+        RadioButton option1 = (RadioButton) rootView.findViewById(R.id.challenge_option1);
+        RadioButton option2 = (RadioButton) rootView.findViewById(R.id.challenge_option2);
+        RadioButton option3 = (RadioButton) rootView.findViewById(R.id.challenge_option3);
+        RadioButton option4 = (RadioButton) rootView.findViewById(R.id.challenge_option4);
+
+        // Set title and subtitle
+        getActivity().setTitle(R.string.challenge_accepted);
+        ((ChallengeActivity)getActivity()).getSupportActionBar().setSubtitle("What's this flag?");
+
         // Display flag on screen
-        String flagFilename = AppHelper.FLAG_BASE_URL + options.get(correctOptionIndex).getCountryCode().toLowerCase() + AppHelper.FLAG_DEFAULT_EXTENSION;
+        String flagFilename = AppHelper.FLAG_BASE_URL + this.options.get(this.correctOptionIndex).getCountryCode().toLowerCase() + AppHelper.FLAG_DEFAULT_EXTENSION;
         Picasso.with(getActivity())
                 .load(flagFilename)
                 .placeholder(R.drawable.placeholder)
@@ -128,6 +145,7 @@ public class ChallengeFragment extends Fragment {
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.container, AnswerFragment.newInstance(this.options.get(index).isCorrectAnswer()))
+                .addToBackStack("challenge")
                 .commit();
     }
 }
