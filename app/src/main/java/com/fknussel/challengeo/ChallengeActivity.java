@@ -1,7 +1,9 @@
 package com.fknussel.challengeo;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,10 +18,15 @@ public class ChallengeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        // overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
         
         setContentView(R.layout.activity_challenge);
-        
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.challenge_accepted);
+        actionBar.setSubtitle("What's this flag?");
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new ChallengeFragment())
@@ -48,5 +55,11 @@ public class ChallengeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 }

@@ -30,7 +30,10 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        
+
+        // Show action bar (hidden on splash screen)
+        ((MainActivity)getActivity()).getSupportActionBar().show();
+
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // List of countries with AutoComplete
