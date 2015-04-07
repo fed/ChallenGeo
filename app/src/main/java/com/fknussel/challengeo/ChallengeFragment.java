@@ -23,16 +23,18 @@ public class ChallengeFragment extends Fragment {
     private ArrayList<Answer> options = new ArrayList<>();
     private int correctOptionIndex;
 
-    public ChallengeFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Generate random country here, otherwise the "try again"
-        // button fails to load the same flag twice
-        generateOptions();
+        if (savedInstanceState == null) {
+            // Generate random country here, otherwise the "try again"
+            // button fails to load the same flag twice
+            generateOptions();
+        } else {
+            this.options = (ArrayList<Answer>) savedInstanceState.getSerializable("options");
+            this.correctOptionIndex = savedInstanceState.getInt("correctOptionIndex");
+        }
     }
 
     @Override
@@ -100,6 +102,14 @@ public class ChallengeFragment extends Fragment {
         });
         
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        outState.putParcelable("options", this.options);
+        outState.putSerializable("options", this.options);
+        outState.putInt("correctOptionIndex", this.correctOptionIndex);
+        super.onSaveInstanceState(outState);
     }
 
     private void displayResult(int index) {

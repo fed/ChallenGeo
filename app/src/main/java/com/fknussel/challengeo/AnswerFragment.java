@@ -64,7 +64,6 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Take the user to the next question
-                Log.d("FISH", "Next question, new fragment created!");
                 fm.beginTransaction()
                         .replace(R.id.container, new ChallengeFragment())
                         .commit();
@@ -72,18 +71,5 @@ public class AnswerFragment extends Fragment {
         });
 
         return v;
-    }
-
-    private void redirect(boolean correct) {
-
-
-
-        // false means "Try Again"
-        // true means "Next Question"
-        if (correct) {
-
-        } else {
-
-        }
     }
 }
