@@ -20,6 +20,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_below="@id/right_answer_icon"
         android:text="@string/next_question"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp" />
 
 </RelativeLayout>

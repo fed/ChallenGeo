@@ -23,14 +23,16 @@
             android:id="@+id/try_again"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/try_again" />
+            android:text="@string/try_again"
+            android:padding="20dp" />
 
         <Button
             android:id="@+id/next_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next_question"
-            android:layout_toRightOf="@id/try_again" />
+            android:layout_toRightOf="@id/try_again"
+            android:padding="20dp" />
         
     </RelativeLayout>
     
