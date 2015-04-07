@@ -3,6 +3,7 @@ package com.fknussel.challengeo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,20 +21,40 @@ public class ChallengeFragment extends Fragment {
 
     private static String TAG = ChallengeFragment.class.getSimpleName();
 
-    private ArrayList<Answer> options = new ArrayList<>();
+    private ArrayList<Answer> options;
     private int correctOptionIndex;
+
+    public static ChallengeFragment newInstance() {
+        return new ChallengeFragment();
+    }
+
+    public static ChallengeFragment newInstance(ArrayList<Answer> options, int correctOptionIndex) {
+        ChallengeFragment f = new ChallengeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("options", options);
+        args.putInt("correctOptionIndex", correctOptionIndex);
+        f.setArguments(args);
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState == null) {
+        Bundle arguments = getArguments();
+
+        if (arguments != null) {
+            // Try again button got pressed
+            this.options = (ArrayList<Answer>) getArguments().getSerializable("options");
+            this.correctOptionIndex = getArguments().getInt("correctOptionIndex");
+        } else if (savedInstanceState != null) {
+            // Handle screen rotations
+            this.options = (ArrayList<Answer>) savedInstanceState.getSerializable("options");
+            this.correctOptionIndex = savedInstanceState.getInt("correctOptionIndex");
+        } else {
             // Generate random country here, otherwise the "try again"
             // button fails to load the same flag twice
             generateOptions();
-        } else {
-            this.options = (ArrayList<Answer>) savedInstanceState.getSerializable("options");
-            this.correctOptionIndex = savedInstanceState.getInt("correctOptionIndex");
         }
     }
 
@@ -42,8 +63,6 @@ public class ChallengeFragment extends Fragment {
 
         // Action bar might be hidden
         ((ChallengeActivity)getActivity()).getSupportActionBar().show();
-
-        // TO DO: Clear backstack!!!
 
         // Inflate view
         View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
@@ -106,21 +125,23 @@ public class ChallengeFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        outState.putParcelable("options", this.options);
         outState.putSerializable("options", this.options);
         outState.putInt("correctOptionIndex", this.correctOptionIndex);
         super.onSaveInstanceState(outState);
     }
 
     private void displayResult(int index) {
+        boolean isCorrect = this.options.get(index).isCorrectAnswer();
+
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.container, AnswerFragment.newInstance(this.options.get(index).isCorrectAnswer()))
-                .addToBackStack("challenge")
-                .commit();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.container,
+                AnswerFragment.newInstance(isCorrect, this.options, this.correctOptionIndex));
+        ft.commit();
     }
 
     private void generateOptions() {
+        this.options = new ArrayList<>();
         int numOptions = 4;
         int size = AppHelper.listNames.size();
         int min = 0;

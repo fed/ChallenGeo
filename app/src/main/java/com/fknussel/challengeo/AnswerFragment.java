@@ -12,16 +12,20 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AnswerFragment extends Fragment {
 
     /*
      * Static factory method that takes an boolean parameter, initializes
      * the fragment's arguments, and returns the new fragment to the client.
      */
-    public static AnswerFragment newInstance(boolean correct) {
+    public static AnswerFragment newInstance(boolean correct, ArrayList<Answer> options, int correctOptionIndex) {
         AnswerFragment f = new AnswerFragment();
         Bundle args = new Bundle();
         args.putBoolean("correct", correct);
+        args.putSerializable("options", options);
+        args.putInt("correctOptionIndex", correctOptionIndex);
         f.setArguments(args);
         return f;
     }
@@ -30,7 +34,9 @@ public class AnswerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         int layout;
-        boolean correct = getArguments().getBoolean("correct");
+        final boolean correct = getArguments().getBoolean("correct");
+        final ArrayList<Answer> options = (ArrayList<Answer>) getArguments().getSerializable("options");
+        final int correctOptionIndex = getArguments().getInt("correctOptionIndex");
 
         // Hide action bar
         ((ChallengeActivity)getActivity()).getSupportActionBar().hide();
@@ -53,7 +59,9 @@ public class AnswerFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // Go back to the previous fragment
-                    fm.popBackStack();
+                    fm.beginTransaction()
+                            .replace(R.id.container, ChallengeFragment.newInstance(options, correctOptionIndex))
+                            .commit();
                 }
             });
         }
@@ -65,7 +73,7 @@ public class AnswerFragment extends Fragment {
             public void onClick(View v) {
                 // Take the user to the next question
                 fm.beginTransaction()
-                        .replace(R.id.container, new ChallengeFragment())
+                        .replace(R.id.container, ChallengeFragment.newInstance())
                         .commit();
             }
         });
