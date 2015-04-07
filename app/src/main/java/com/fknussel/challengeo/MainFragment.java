@@ -44,7 +44,7 @@ public class MainFragment extends Fragment {
         final Button getCountryInfoButton = (Button) rootView.findViewById(R.id.getCountryInfo);
         final Button getRandomCountryInfoButton = (Button) rootView.findViewById(R.id.getRandomCountryInfo);
         final Button challengeAcceptedButton = (Button) rootView.findViewById(R.id.challengeAccepted);
-        
+
         // AutoCompleteTextView will start working from first character
         actv.setThreshold(1);
 
@@ -58,6 +58,12 @@ public class MainFragment extends Fragment {
                 selection = (String) parent.getItemAtPosition(position);
                 
                 Log.d(TAG, "Selected Country: " + selection + " (" + AppHelper.mapCodes.get(selection) + ")");
+
+                // Set focus to "Get country info" button to prevent ACTV
+                // from showing again the selected option on screen rotation.
+                // This method sets focus back to the first focusable view in the activity
+                // that's why i needed to make the root view focusable on both layouts
+                actv.clearFocus();
 
                 // Dismiss soft keyboard
                 InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
