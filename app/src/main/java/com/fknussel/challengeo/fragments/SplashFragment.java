@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.activities.MainActivity;
+import com.fknussel.challengeo.models.Country;
+import com.fknussel.challengeo.networking.ApiClient;
 
 import java.util.List;
 

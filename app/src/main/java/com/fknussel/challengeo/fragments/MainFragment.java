@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.activities.MainActivity;
 
 public class MainFragment extends Fragment {
     

@@ -1,18 +1,17 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.fknussel.challengeo.interfaces.Updatable;
+import com.fknussel.challengeo.activities.CountryActivity;
+import com.fknussel.challengeo.models.Country;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CountryMapFragment extends SupportMapFragment implements Updatable {

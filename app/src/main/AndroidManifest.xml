@@ -29,7 +29,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,20 +38,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CountryActivity"
+            android:name=".activities.CountryActivity"
             android:label="@string/title_activity_country_info"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.fknussel.challengeo.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ChallengeActivity"
+            android:name=".activities.ChallengeActivity"
             android:label="@string/title_activity_challenge"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.fknussel.challengeo.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
 
         <meta-data

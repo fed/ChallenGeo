@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.adapters;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.models.Country;
+import com.fknussel.challengeo.models.CountryInfoItem;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

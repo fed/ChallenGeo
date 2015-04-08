@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.fragments.MainFragment;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.fragments.SplashFragment;
 
 
 public class MainActivity extends ActionBarActivity 

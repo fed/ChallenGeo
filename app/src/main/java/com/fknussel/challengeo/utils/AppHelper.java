@@ -1,4 +1,6 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.utils;
+
+import com.fknussel.challengeo.models.Country;
 
 import java.util.ArrayList;
 import java.util.HashMap;

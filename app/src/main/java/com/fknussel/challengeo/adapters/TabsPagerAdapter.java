@@ -1,10 +1,12 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import com.fknussel.challengeo.fragments.CountryFlagFragment;
+import com.fknussel.challengeo.fragments.CountryInfoFragment;
+import com.fknussel.challengeo.fragments.CountryMapFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 

@@ -1,15 +1,14 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.activities;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.fknussel.challengeo.fragments.ChallengeFragment;
+import com.fknussel.challengeo.R;
 
 
 public class ChallengeActivity extends ActionBarActivity {

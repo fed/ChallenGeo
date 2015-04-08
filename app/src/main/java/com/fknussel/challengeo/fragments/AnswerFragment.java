@@ -1,16 +1,17 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.activities.ChallengeActivity;
+import com.fknussel.challengeo.models.Answer;
 
 import java.util.ArrayList;
 

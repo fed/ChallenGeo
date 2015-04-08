@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.models;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.interfaces.Updatable;
+import com.fknussel.challengeo.activities.CountryActivity;
+import com.fknussel.challengeo.models.Country;
 import com.squareup.picasso.Picasso;
 
 public class CountryFlagFragment extends Fragment implements Updatable {

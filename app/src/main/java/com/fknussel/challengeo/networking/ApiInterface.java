@@ -1,4 +1,6 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.networking;
+
+import com.fknussel.challengeo.models.Country;
 
 import java.util.List;
 

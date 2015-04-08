@@ -1,17 +1,19 @@
-package com.fknussel.challengeo;
+package com.fknussel.challengeo.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
+import com.fknussel.challengeo.utils.AppHelper;
+import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.activities.ChallengeActivity;
+import com.fknussel.challengeo.models.Answer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
