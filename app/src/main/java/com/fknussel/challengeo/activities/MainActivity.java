@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.fknussel.challengeo.interfaces.OnChallengeAcceptedListener;
+import com.fknussel.challengeo.interfaces.OnCountrySelectedListener;
+import com.fknussel.challengeo.interfaces.OnRandomCountryRequestedListener;
 import com.fknussel.challengeo.utils.AppHelper;
 import com.fknussel.challengeo.fragments.MainFragment;
 import com.fknussel.challengeo.R;
@@ -15,7 +18,7 @@ import com.fknussel.challengeo.fragments.SplashFragment;
 
 
 public class MainActivity extends ActionBarActivity 
-        implements SplashFragment.OnDataLoadedListener, MainFragment.OnCountrySelectedListener, MainFragment.OnRandomCountryRequestedListener, MainFragment.OnChallengeAcceptedListener {
+        implements SplashFragment.OnDataLoadedListener, OnCountrySelectedListener, OnRandomCountryRequestedListener, OnChallengeAcceptedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     

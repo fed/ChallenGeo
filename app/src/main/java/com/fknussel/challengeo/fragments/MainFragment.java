@@ -14,6 +14,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.fknussel.challengeo.interfaces.OnChallengeAcceptedListener;
+import com.fknussel.challengeo.interfaces.OnCountrySelectedListener;
+import com.fknussel.challengeo.interfaces.OnRandomCountryRequestedListener;
 import com.fknussel.challengeo.utils.AppHelper;
 import com.fknussel.challengeo.R;
 import com.fknussel.challengeo.activities.MainActivity;
@@ -131,17 +134,5 @@ public class MainFragment extends Fragment {
         } catch(ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement ChallengeAcceptedListener interface");
         }
-    }
-
-    public interface OnCountrySelectedListener {
-        public void onCountrySelected(String name);
-    }
-
-    public interface OnRandomCountryRequestedListener {
-        public void onRandomCountryRequested();
-    }
-
-    public interface OnChallengeAcceptedListener {
-        public void onChallengeAccepted();
     }
 }
