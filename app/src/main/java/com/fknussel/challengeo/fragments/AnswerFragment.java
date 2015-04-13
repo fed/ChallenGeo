@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
 import com.fknussel.challengeo.R;
@@ -25,18 +26,19 @@ public class AnswerFragment extends Fragment {
         AnswerFragment f = new AnswerFragment();
         Bundle args = new Bundle();
         args.putBoolean("correct", correct);
-        args.putSerializable("options", options);
+        args.putParcelableArrayList("options", options);
         args.putInt("correctOptionIndex", correctOptionIndex);
         f.setArguments(args);
         return f;
     }
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         int layout;
         final boolean correct = getArguments().getBoolean("correct");
-        final ArrayList<Answer> options = (ArrayList<Answer>) getArguments().getSerializable("options");
+        final ArrayList<Answer> options = getArguments().getParcelableArrayList("options");
         final int correctOptionIndex = getArguments().getInt("correctOptionIndex");
 
         // Hide action bar

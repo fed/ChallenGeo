@@ -1,6 +1,9 @@
 package com.fknussel.challengeo.models;
 
-public class Answer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Answer implements Parcelable {
 
     private String countryName;
     private String countryCode;
@@ -35,4 +38,35 @@ public class Answer {
     public void setCorrectAnswer(boolean isCorrectAnswer) {
         this.isCorrectAnswer = isCorrectAnswer;
     }
+
+    protected Answer(Parcel in) {
+        countryName = in.readString();
+        countryCode = in.readString();
+        isCorrectAnswer = in.readByte() != 0x00;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(countryName);
+        dest.writeString(countryCode);
+        dest.writeByte((byte) (isCorrectAnswer ? 0x01 : 0x00));
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
+        @Override
+        public Answer createFromParcel(Parcel in) {
+            return new Answer(in);
+        }
+
+        @Override
+        public Answer[] newArray(int size) {
+            return new Answer[size];
+        }
+    };
 }

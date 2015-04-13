@@ -33,7 +33,7 @@ public class ChallengeFragment extends Fragment {
     public static ChallengeFragment newInstance(ArrayList<Answer> options, int correctOptionIndex) {
         ChallengeFragment f = new ChallengeFragment();
         Bundle args = new Bundle();
-        args.putSerializable("options", options);
+        args.putParcelableArrayList("options", options);
         args.putInt("correctOptionIndex", correctOptionIndex);
         f.setArguments(args);
         return f;
@@ -47,11 +47,11 @@ public class ChallengeFragment extends Fragment {
 
         if (arguments != null) {
             // Try again button got pressed
-            this.options = (ArrayList<Answer>) getArguments().getSerializable("options");
+            this.options = getArguments().getParcelableArrayList("options");
             this.correctOptionIndex = getArguments().getInt("correctOptionIndex");
         } else if (savedInstanceState != null) {
             // Handle screen rotations
-            this.options = (ArrayList<Answer>) savedInstanceState.getSerializable("options");
+            this.options = savedInstanceState.getParcelableArrayList("options");
             this.correctOptionIndex = savedInstanceState.getInt("correctOptionIndex");
         } else {
             // Generate random country here, otherwise the "try again"
@@ -127,7 +127,7 @@ public class ChallengeFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("options", this.options);
+        outState.putParcelableArrayList("options", this.options);
         outState.putInt("correctOptionIndex", this.correctOptionIndex);
         super.onSaveInstanceState(outState);
     }
