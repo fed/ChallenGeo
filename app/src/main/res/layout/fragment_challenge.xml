@@ -10,6 +10,48 @@
     tools:context=".ChallengeActivity$ChallengeFragment"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/score_streak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@color/primary_dark"
+            android:textColor="@android:color/white"
+            android:text="Streak: X"
+            android:layout_marginRight="1dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/score_high"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:textColor="@android:color/white"
+            android:text="High: X"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/score_wrongs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:textColor="@android:color/white"
+            android:text="Wrongs: X"
+            android:layout_marginLeft="1dp"
+            android:gravity="center" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

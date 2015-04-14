@@ -13,6 +13,10 @@ import com.fknussel.challengeo.R;
 
 public class ChallengeActivity extends ActionBarActivity {
 
+    private int streak;
+    private int high;
+    private int wrongs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +31,26 @@ public class ChallengeActivity extends ActionBarActivity {
         actionBar.setSubtitle("What's this flag?");
 
         if (savedInstanceState == null) {
+            this.streak = 0;
+            this.high = 0;
+            this.wrongs = 0;
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new ChallengeFragment())
                     .commit();
+        } else {
+            this.streak = savedInstanceState.getInt("streak");
+            this.high = savedInstanceState.getInt("high");
+            this.wrongs = savedInstanceState.getInt("wrongs");
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("streak", this.streak);
+        outState.putInt("high", this.high);
+        outState.putInt("wrongs", this.wrongs);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,5 +78,31 @@ public class ChallengeActivity extends ActionBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    public int getStreak() {
+        return this.streak;
+    }
+
+    public int getHigh() {
+        return this.high;
+    }
+
+    public int getWrongs() {
+        return this.wrongs;
+    }
+
+    public void keepScore(boolean correct) {
+        if (correct) {
+            this.streak++;      // increment rights
+
+            // is new highest score?
+            if (this.streak > this.high) {
+                this.high = this.streak;
+            }
+        } else {
+            this.wrongs++;      // increment wrongs
+            this.streak = 0;    // reset streak
+        }
     }
 }

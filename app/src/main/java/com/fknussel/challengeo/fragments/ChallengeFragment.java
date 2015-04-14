@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.fknussel.challengeo.utils.AppHelper;
 import com.fknussel.challengeo.R;
@@ -69,6 +70,9 @@ public class ChallengeFragment extends Fragment {
         // Inflate view
         View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
 
+        TextView streakView = (TextView) rootView.findViewById(R.id.score_streak);
+        TextView highView = (TextView) rootView.findViewById(R.id.score_high);
+        TextView wrongsView = (TextView) rootView.findViewById(R.id.score_wrongs);
         ImageView flagView = (ImageView) rootView.findViewById(R.id.challenge_flag);
         RadioButton option1 = (RadioButton) rootView.findViewById(R.id.challenge_option1);
         RadioButton option2 = (RadioButton) rootView.findViewById(R.id.challenge_option2);
@@ -78,6 +82,11 @@ public class ChallengeFragment extends Fragment {
         // Set title and subtitle
         getActivity().setTitle(R.string.challenge_accepted);
         ((ChallengeActivity)getActivity()).getSupportActionBar().setSubtitle("What's this flag?");
+
+        // Set score
+        streakView.setText("Streak: " + ((ChallengeActivity) getActivity()).getStreak());
+        highView.setText("High: " + ((ChallengeActivity) getActivity()).getHigh());
+        wrongsView.setText("Wrongs: " + ((ChallengeActivity) getActivity()).getWrongs());
 
         // Display flag on screen
         String flagFilename = AppHelper.FLAG_BASE_URL + this.options.get(this.correctOptionIndex).getCountryCode().toLowerCase() + AppHelper.FLAG_DEFAULT_EXTENSION;

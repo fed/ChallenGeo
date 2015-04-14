@@ -44,6 +44,9 @@ public class AnswerFragment extends Fragment {
         // Hide action bar
         ((ChallengeActivity)getActivity()).getSupportActionBar().hide();
 
+        // Keep score
+        ((ChallengeActivity) getActivity()).keepScore(correct);
+
         // Use appropriate layout
         if (correct) {
             layout = R.layout.answer_correct;
