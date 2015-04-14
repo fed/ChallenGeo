@@ -42,6 +42,7 @@ public class AnswerFragment extends Fragment {
         final int correctOptionIndex = getArguments().getInt("correctOptionIndex");
 
         // Hide action bar
+        ((ChallengeActivity)getActivity()).getSupportActionBar().setShowHideAnimationEnabled(false);
         ((ChallengeActivity)getActivity()).getSupportActionBar().hide();
 
         // Keep score
