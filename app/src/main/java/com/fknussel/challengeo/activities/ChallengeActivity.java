@@ -1,7 +1,9 @@
 package com.fknussel.challengeo.activities;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -31,9 +33,11 @@ public class ChallengeActivity extends ActionBarActivity {
         actionBar.setSubtitle("What's this flag?");
 
         if (savedInstanceState == null) {
-            this.streak = 0;
-            this.high = 0;
-            this.wrongs = 0;
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            this.streak = preferences.getInt("streak", 0);
+            this.high = preferences.getInt("high", 0);
+            this.wrongs = preferences.getInt("wrongs", 0);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new ChallengeFragment())
                     .commit();
@@ -92,6 +96,15 @@ public class ChallengeActivity extends ActionBarActivity {
         return this.wrongs;
     }
 
+    public void persistScore() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("streak", this.streak);
+        editor.putInt("high", this.high);
+        editor.putInt("wrongs", this.wrongs);
+        editor.apply();
+    }
+
     public void keepScore(boolean correct) {
         if (correct) {
             this.streak++;      // increment rights
@@ -104,5 +117,7 @@ public class ChallengeActivity extends ActionBarActivity {
             this.wrongs++;      // increment wrongs
             this.streak = 0;    // reset streak
         }
+
+        this.persistScore();
     }
 }
