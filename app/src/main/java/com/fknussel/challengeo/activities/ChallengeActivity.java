@@ -1,6 +1,8 @@
 package com.fknussel.challengeo.activities;
 
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fknussel.challengeo.fragments.ChallengeFragment;
 import com.fknussel.challengeo.R;
@@ -23,7 +27,6 @@ public class ChallengeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
         
         setContentView(R.layout.activity_challenge);
@@ -71,8 +74,33 @@ public class ChallengeActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_report:
+                // Created a new Dialog
+                Dialog dialog = new Dialog(this);
+
+                // Set the title
+                dialog.setTitle("Report Question");
+
+                // inflate the layout
+                dialog.setContentView(R.layout.dialog_report);
+
+                // Set the dialog text -- this is better done in the XML
+                TextView text = (TextView)dialog.findViewById(R.id.report_title);
+
+                // Display the dialog
+                dialog.show();
+
+                break;
+            case R.id.action_reset:
+                // Reset score (delete shared prefs)
+                SharedPreferences score = PreferenceManager.getDefaultSharedPreferences(this);
+                score.edit().clear().apply();
+                this.resetScore();
+                ChallengeFragment fragment = (ChallengeFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+                fragment.resetScore();
+                Toast.makeText(this, "Score was successfully reset :)", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -119,5 +147,11 @@ public class ChallengeActivity extends ActionBarActivity {
         }
 
         this.persistScore();
+    }
+
+    public void resetScore() {
+        this.streak = 0;
+        this.high = 0;
+        this.wrongs = 0;
     }
 }

@@ -22,6 +22,10 @@ import java.util.Random;
 
 public class ChallengeFragment extends Fragment {
 
+    private TextView streakView;
+    private TextView highView;
+    private TextView wrongsView;
+
     private static String TAG = ChallengeFragment.class.getSimpleName();
 
     private ArrayList<Answer> options;
@@ -70,9 +74,9 @@ public class ChallengeFragment extends Fragment {
         // Inflate view
         View rootView = inflater.inflate(R.layout.fragment_challenge, container, false);
 
-        TextView streakView = (TextView) rootView.findViewById(R.id.score_streak);
-        TextView highView = (TextView) rootView.findViewById(R.id.score_high);
-        TextView wrongsView = (TextView) rootView.findViewById(R.id.score_wrongs);
+        streakView = (TextView) rootView.findViewById(R.id.score_streak);
+        highView = (TextView) rootView.findViewById(R.id.score_high);
+        wrongsView = (TextView) rootView.findViewById(R.id.score_wrongs);
         ImageView flagView = (ImageView) rootView.findViewById(R.id.challenge_flag);
         RadioButton option1 = (RadioButton) rootView.findViewById(R.id.challenge_option1);
         RadioButton option2 = (RadioButton) rootView.findViewById(R.id.challenge_option2);
@@ -191,5 +195,11 @@ public class ChallengeFragment extends Fragment {
 
             this.options.add(new Answer(randomName, randomCode, truthValue));
         }
+    }
+
+    public void resetScore() {
+        streakView.setText("Streak: 0");
+        highView.setText("High: 0");
+        wrongsView.setText("Wrongs: 0");
     }
 }
