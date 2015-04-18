@@ -1,20 +1,27 @@
 package com.fknussel.challengeo.activities;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fknussel.challengeo.fragments.ChallengeFragment;
 import com.fknussel.challengeo.R;
+import com.fknussel.challengeo.utils.AppHelper;
 
 
 public class ChallengeActivity extends ActionBarActivity {
@@ -77,7 +84,7 @@ public class ChallengeActivity extends ActionBarActivity {
         switch (id) {
             case R.id.action_report:
                 // Created a new Dialog
-                Dialog dialog = new Dialog(this);
+                final Dialog dialog = new Dialog(this);
 
                 // Set the title
                 dialog.setTitle("Report Question");
@@ -85,21 +92,41 @@ public class ChallengeActivity extends ActionBarActivity {
                 // inflate the layout
                 dialog.setContentView(R.layout.dialog_report);
 
-                // Set the dialog text -- this is better done in the XML
-                TextView text = (TextView)dialog.findViewById(R.id.report_title);
+                final TextView comments = (TextView) dialog.findViewById(R.id.report_comments);
+                Button submit = (Button)dialog.findViewById(R.id.report_submit);
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
 
                 // Display the dialog
                 dialog.show();
 
                 break;
+            
             case R.id.action_reset:
-                // Reset score (delete shared prefs)
-                SharedPreferences score = PreferenceManager.getDefaultSharedPreferences(this);
-                score.edit().clear().apply();
-                this.resetScore();
-                ChallengeFragment fragment = (ChallengeFragment)getSupportFragmentManager().findFragmentById(R.id.container);
-                fragment.resetScore();
-                Toast.makeText(this, "Score was successfully reset :)", Toast.LENGTH_SHORT).show();
+
+                //Ask the user whether they really want to reset the score
+                final ChallengeActivity context = this;
+                new AlertDialog.Builder(this)
+                        .setTitle("Are you sure?")
+                        .setMessage("You are about to delete your score... Shall I proceed?")
+                        .setPositiveButton("Yes, please", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Reset score (delete shared prefs)
+                                SharedPreferences score = PreferenceManager.getDefaultSharedPreferences(context);
+                                score.edit().clear().apply();
+                                context.resetScore();
+                                ChallengeFragment fragment = (ChallengeFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+                                fragment.resetScore();
+                                Toast.makeText(getApplicationContext(), "Score was successfully reset :)", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
                 break;
         }
 
