@@ -197,6 +197,17 @@ public class ChallengeFragment extends Fragment {
         }
     }
 
+    public String getCurrentOptions() {
+        String answers = "";
+        for (Answer answer : this.options) {
+            answers += answer.getCountryName() + " (" + answer.getCountryCode() + "), ";
+        }
+
+        return "Question Log: " + answers +
+                this.correctOptionIndex +
+                " | " + AppHelper.FLAG_BASE_URL + this.options.get(this.correctOptionIndex).getCountryCode().toLowerCase() + AppHelper.FLAG_DEFAULT_EXTENSION;
+    }
+
     public void resetScore() {
         streakView.setText("Streak: 0");
         highView.setText("High: 0");

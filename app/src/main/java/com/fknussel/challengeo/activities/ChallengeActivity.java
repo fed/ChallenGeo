@@ -83,26 +83,20 @@ public class ChallengeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_report:
-                // Created a new Dialog
-                final Dialog dialog = new Dialog(this);
 
-                // Set the title
-                dialog.setTitle("Report Question");
+                // Report incorrect question via email
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{AppHelper.Email.getTo()});
+                i.putExtra(Intent.EXTRA_SUBJECT, AppHelper.Email.getSubject());
 
-                // inflate the layout
-                dialog.setContentView(R.layout.dialog_report);
-
-                final TextView comments = (TextView) dialog.findViewById(R.id.report_comments);
-                Button submit = (Button)dialog.findViewById(R.id.report_submit);
-                submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                // Display the dialog
-                dialog.show();
+                ChallengeFragment fragment = (ChallengeFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+                i.putExtra(Intent.EXTRA_TEXT, fragment.getCurrentOptions());
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             

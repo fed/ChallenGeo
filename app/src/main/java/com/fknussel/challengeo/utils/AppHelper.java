@@ -1,5 +1,8 @@
 package com.fknussel.challengeo.utils;
 
+import android.os.AsyncTask;
+import android.widget.Toast;
+
 import com.fknussel.challengeo.models.Country;
 
 import java.util.ArrayList;
@@ -178,5 +181,23 @@ public class AppHelper {
         Random rand = new Random();
         int random = rand.nextInt((max - min) + 1) + min;
         return AppHelper.listNames.get(random);
+    }
+
+    public static class Email {
+        private static String to = "fknussel@gmail.com";
+        private static String subject = "ChallenGeo";
+        private static String text = "This is the default text";
+
+        public static String getTo() {
+            return to;
+        }
+
+        public static String getSubject() {
+            return subject;
+        }
+
+        public static String getText() {
+            return text;
+        }
     }
 }
