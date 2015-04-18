@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false"></string>
+    <string name="alt_flag">Drapeau</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_random">Pays Aléatoire</string>
+    <string name="button_map">Voir sur la carte</string>
+    <string name="country_info">Obtenir des informations de pays</string>
+    <string name="dialag_report_hint">Se il vous plaît entrer quelques détails supplémentaires (facultatif)</string>
+    <string name="dialog_report_description"></string>
+    <string name="dialog_report_submit">Envoyer</string>
+    <string name="next_question">Question Suivante</string>
+    <string name="no_country_selected">Se il vous plaît sélectionner un pays dans la liste</string>
+    <string name="please_wait">Récupération des données à partir d'Internet...</string>
+    <string name="right_answer">Bonne Réponse</string>
+    <string name="try_again">Essaye Encore</string>
+    <string name="wrong_answer">Mauvaise Réponse</string>
+    <string name="random_country_info">Obtenir des informations de pays aléatoire</string>
+    <string name="score_streak">Streak: X</string>
+    <string name="score_high">High: X</string>
+    <string name="score_wrongs">Wrongs: X</string>
+    <string name="country_name">Country Name</string>
+</resources>

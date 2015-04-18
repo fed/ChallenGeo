@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alt_flag">Bandera</string>
+    <string name="action_settings">Opciones</string>
+    <string name="action_random">País Aleatorio</string>
+    <string name="button_map">Ver en mapa</string>
+    <string name="dialog_report_submit">Enviar</string>
+    <string name="next_question">Próxima Pregunta</string>
+    <string name="no_country_selected">Por favor, seleccioná un país de la lista</string>
+    <string name="please_wait">Descargando información de Internet…</string>
+    <string name="wrong_answer">Respuesta Incorrecta</string>
+    <string name="try_again">Intentá Otra Vez</string>
+    <string name="right_answer">Respuesta Correcta</string>
+    <string name="random_country_info">Ver Detalles de País Aleatorio</string>
+    <string name="country_info">Ver detalles del país</string>
+    <string name="dialag_report_hint">Por favor, dejanos algún comentario adicional (opcional)</string>
+    <string name="challenge_accepted"></string>
+    <string name="score_streak">Streak: X</string>
+    <string name="score_high">High: X</string>
+    <string name="score_wrongs">Wrongs: X</string>
+    <string name="country_name">Country Name</string>
+</resources>
