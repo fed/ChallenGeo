@@ -22,9 +22,9 @@ ListViews and Custom Adapters.
 Using Shared Preferences to store user settings.
 Flexible UI: Landscape and portrait custom layouts.
 Handling configuration changes using headless fragments.
-Networking: Consuming RESTful services using Retrofit.
-Handling network responses using GSON to parse JSON objects into POJOs.
-Handling collections using Guava.
+Networking: Consuming RESTful services using [Retrofit](https://github.com/square/retrofit).
+Handling network responses using [GSON](https://github.com/google/gson) to parse JSON objects into POJOs.
+Using [Otto](https://github.com/square/otto) to decouple different parts of the application while still allowing them to communicate efficiently.
 UI Design Patterns: Navigation Drawer, Action Bar, View Pager, Swipe to Refresh.
 Material Design: Animations and Transitions.
 Robotium and Robolectric.

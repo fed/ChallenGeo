@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fknussel.challengeo.interfaces.OnDataLoadedListener;
 import com.fknussel.challengeo.utils.AppHelper;
 import com.fknussel.challengeo.R;
 import com.fknussel.challengeo.activities.MainActivity;
 import com.fknussel.challengeo.models.Country;
 import com.fknussel.challengeo.networking.ApiClient;
+import com.fknussel.challengeo.utils.OnDataLoadedEvent;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -23,7 +27,8 @@ import retrofit.client.Response;
 public class SplashFragment extends Fragment {
     
     private static final String TAG = SplashFragment.class.getSimpleName();
-    
+
+    private Bus bus;
     private OnDataLoadedListener callback;
 
     public SplashFragment() {
@@ -37,6 +42,9 @@ public class SplashFragment extends Fragment {
         if (getActivity().getActionBar() != null) {
             getActivity().getActionBar().hide();
         }
+
+        bus = new Bus();
+        bus.register(this);
     }
 
     @Override
@@ -63,8 +71,7 @@ public class SplashFragment extends Fragment {
 
                 AppHelper.loadLanguages();
 
-                // Replace whatever is in the container view with this fragment
-                callback.onDataLoaded();
+                bus.post(new OnDataLoadedEvent());
             }
 
             @Override
@@ -87,8 +94,15 @@ public class SplashFragment extends Fragment {
         }
     }
 
-    public interface OnDataLoadedListener {
+    @Subscribe
+    public void dataLoaded(OnDataLoadedEvent event) {
+        // Replace whatever is in the container view with this fragment
+        callback.onDataLoaded();
+    }
 
-        public void onDataLoaded();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bus.unregister(this);
     }
 }
