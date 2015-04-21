@@ -1,5 +1,6 @@
 package com.fknussel.challengeo.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.fknussel.challengeo.activities.CountryActivity;
 import com.fknussel.challengeo.models.Country;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,23 +39,22 @@ public class CountryMapFragment extends SupportMapFragment implements Updatable 
             e.printStackTrace();
         }
 
-        updateDisplay();
-
         return view;
     }
 
     public void updateDisplay() {
-        Country country = ((CountryActivity)getActivity()).getCountry();
-        LatLng coords = new LatLng(country.getLat(), country.getLng());
+        final Country country = ((CountryActivity)getActivity()).getCountry();
+        final LatLng coords = new LatLng(country.getLat(), country.getLng());
 
         // Delete old markers
-        getMap().clear();
-        
-        // Create a marker in the map at a given position with a title
-        getMap().addMarker(new MarkerOptions().
-                position(coords).title(country.getName()));
-
-        // Center map on country and Restore original zoom level
-        getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(coords, getMap().getMinZoomLevel()));
+        getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.clear();
+                googleMap.addMarker(new MarkerOptions().
+                        position(coords).title(country.getName()));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coords, googleMap.getMinZoomLevel()));
+            }
+        });
     }
 }
